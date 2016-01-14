@@ -1,0 +1,20 @@
+# Pinboard accounts to check for links
+accounts:
+  - user: "sample_user_one" # This will check *all* the links from this account
+  - user: "sample_user_two"
+    tags: # Providing a list of tags means it will only check for new links with those tags
+      - tag: "important_tag"
+      - tag: "another_important_tag"
+# How many days back to check for links
+num_days: 7
+# Whether or not to include today in the link dump
+include_today: false
+# Jekyll layout to use for the resultant blog post (in the front-matter)
+layout: "post"
+# Jekyll category to use (goes in the front-matter)
+category: "links"
+# Where the resulting blog post will be saved
+output_dir: "_posts"
+# Some HTML to place in the blog post before the list of links.
+link_preamble: >
+  <p>A collection of things that we've encountered over the past week that we think might be of interest...</p>
