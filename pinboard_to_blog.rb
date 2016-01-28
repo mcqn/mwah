@@ -58,11 +58,12 @@ end
 
 # Now we have the links, create the blog post
 unless combined.empty?
-  post_filename = "#{Date.today.to_s}-Indie-Manufacturing-Links.html"
+  post_filename = "#{Date.today.to_s}-indie-manufacturing-links.html"
   post_title = "#{Date.today.to_s} Indie Manufacturing Links"
+  output_file = "#{settings['output_dir']}/#{post_filename}"
   all_tags = combined.collect { |l| l.dc_subject.split }
   all_tags = all_tags.flatten.uniq.sort
-  File.open("#{settings["output_dir"]}/#{post_filename}", "w") do |post|
+  File.open(output_file, "w") do |post|
     post.puts "---"
     post.puts "layout: #{settings["layout"]}"
     post.puts "title: #{post_title}"
@@ -89,5 +90,12 @@ unless combined.empty?
       post.puts "  </li>"
     end
     post.puts "</ul>"
+  end
+  unless settings["post_hook"].nil?
+    # Call the post hook
+    ph = settings["post_hook"]
+    ph.gsub!(/\#\{output_file\}/, output_file)
+    ph.gsub!(/\#\{title\}/, post_title)
+    `#{ph}`
   end
 end
